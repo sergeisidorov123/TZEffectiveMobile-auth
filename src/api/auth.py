@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy import select
 
+from src.core.crud import oauth2_scheme, get_current_user
 from src.dtos.auth import RegisterRequest, LoginRequest, TokenResponse
 from src.core.security import (
     hash_password,
@@ -9,6 +10,7 @@ from src.core.security import (
 )
 from src.db.db_settings import SessionLocal
 from src.models.user import User
+from src.models.blacklist import BlackList
 
 router = APIRouter(tags=["Auth"])
 
@@ -50,5 +52,10 @@ def login(data: LoginRequest):
 
 
 @router.post("/logout")
-def logout():
+def logout(user: User = Depends(get_current_user), token: str = Depends(oauth2_scheme)):
+    with SessionLocal() as session:
+        revoked_token = BlackList(token=token)
+        session.add(revoked_token)
+        session.commit()
+
     return {"status": "logged out"}
