@@ -6,6 +6,8 @@
 - JWT для аутентификации  
 - bcrypt для хеширования паролей  
 
+** Подготовка и запуск**
+
 1.Запуск проекта(требует докер):
 
 ```commandline
@@ -44,7 +46,7 @@ http://localhost:8000
 
 5. Swagger:
 ```commandline
-http://localhost:8000
+http://localhost:8000/docs
 ```
 
 При тестировании в поле username - нужно вводить email, введенный при регистрации, 
