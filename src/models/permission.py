@@ -10,7 +10,7 @@ class Permission(Base):
     action: Mapped[str] = mapped_column(String)
 
     roles = relationship(
-        "Role",
+        "Roles",
         secondary="role_permissions",
         back_populates="permissions"
     )

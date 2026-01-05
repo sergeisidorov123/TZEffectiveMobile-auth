@@ -1,6 +1,7 @@
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.base import Base
+from .associative import user_roles
 
 class User(Base):
     __tablename__ = "users"
@@ -12,4 +13,4 @@ class User(Base):
 
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
-    roles = relationship("Role", secondary="user_roles", back_populates="users")
+    roles = relationship("Roles", secondary=user_roles, back_populates="users")
