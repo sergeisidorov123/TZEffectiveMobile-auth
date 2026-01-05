@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 import jwt
 from sqlalchemy import select
-
+from sqlalchemy.orm import joinedload
 from src.db.db_settings import SessionLocal
 from src.models.user import User
 from src.models.blacklist import BlackList
@@ -33,7 +33,12 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
                 detail="Token has been revoked"
             )
 
-        user = session.get(User, user_id)
+        user = session.scalar(
+            select(User)
+            .options(joinedload(User.roles))
+            .where(User.id == user_id)
+        )
+
         if not user or not user.is_active:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
