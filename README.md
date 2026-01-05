@@ -6,9 +6,8 @@
 - JWT для аутентификации  
 - bcrypt для хеширования паролей  
 
-Запуск проекта(требует докер):
+1.Запуск проекта(требует докер):
 
-1.
 ```commandline
 git clone https://github.com/sergeisidorov123/TZEffectiveMobile-auth
 cd TZEffectiveMobile
