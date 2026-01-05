@@ -11,3 +11,4 @@ DATABASE_URL = (
 
 engine = create_engine(DATABASE_URL, echo=settings.DEBUG)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
